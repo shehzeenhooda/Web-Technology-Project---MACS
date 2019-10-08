@@ -1,0 +1,175 @@
+<div class="outer-container">
+  <div class="row page-title">
+    <h1>Approve Content</h1>
+  </div>
+  <div class="row">
+    <div class="page-content col-12">
+      <div class="user-list">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link" [ngClass]="{ 'active': tabSelected == 0 }" (click)="showPets()">Pet Profiles</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [ngClass]="{ 'active': tabSelected == 1 }" (click)="showItems()">Shop Items</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [ngClass]="{ 'active': tabSelected == 2 }" (click)="showPosts()">Story Posts</a>
+          </li>
+        </ul>
+
+        <!--Pet table-->
+        <div *ngIf="tabSelected == 0" class="table-container">
+          <h3 *ngIf="currentList.length == 0">There are no pet profiles to approve at this time.</h3>
+          <table mat-table #approvalTable [dataSource]="currentList">
+            <ng-container matColumnDef="img">
+              <td mat-cell class="image-cell" *matCellDef="let pet">
+                <img class="img-thumbnail" [src]="pet.petPic" [alt]="pet.petName">
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="preview">
+              <td mat-cell class="description-cell" *matCellDef="let pet">
+                <div class="text-container">
+                  <h3>{{pet.petName}}</h3>
+                  <p>{{pet.petDescription}}</p>
+                </div>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="author">
+              <td mat-cell class="author-cell" *matCellDef="let pet">
+                <!--If it's an organization, there's no point in showing the same name twice-->
+                <a *ngIf="pet.petUploader.firstName === pet.petUploader.lastName; else regularUser">{{pet.petUploader.firstName}}</a>
+                <ng-template #regularUser>
+                  <a>{{pet.petUploader.firstName}} {{pet.petUploader.lastName}}</a>
+                </ng-template>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="buttons">
+              <td mat-cell class="button-cell" *matCellDef="let pet">
+                <div class="button-container">
+                  <button class="btn-success btn-sm" (click) = "approvePet(pet)">Approve</button>
+                  <button class="btn-light btn-sm" (click)="showDeletePopup(pet._id)">Delete</button>
+                </div>
+              </td>
+            </ng-container>
+
+            <tr mat-row *matRowDef="let row; columns: colsToShow;"></tr>
+
+          </table>
+        </div>
+
+        <!--Shop table-->
+        <div *ngIf="tabSelected == 1" class="table-container">
+          <h3 *ngIf="currentList.length == 0">There are no new products to approve at this time.</h3>
+          <table mat-table #approvalTable [dataSource]="currentList">
+            <ng-container matColumnDef="img">
+              <td mat-cell class="image-cell" *matCellDef="let item">
+                <img class="img-thumbnail" [src]="item.productPic" [alt]="item.productName">
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="preview">
+              <td mat-cell class="description-cell" *matCellDef="let item">
+                <div class="text-container">
+                  <h4>{{item.productName}}</h4>
+                  <p>{{item.productDescription}}</p>
+                </div>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="price">
+              <td mat-cell *matCellDef="let item">
+                <h4>${{item.productPrice}}  </h4>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="author">
+              <td mat-cell class="author-cell" *matCellDef="let item">
+                <a *ngIf="item.productUploader.firstName === item.productUploader.lastName; else regularUser">{{item.productUploader.firstName}}</a>
+                <ng-template #regularUser>
+                  <a>{{item.productUploader.firstName}} {{item.productUploader.lastName}}</a>
+                </ng-template>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="buttons">
+              <td mat-cell class="button-cell" *matCellDef="let item">
+                <div class="button-container">
+                  <button class="btn-success btn-sm" (click) = "approveProduct(item)">Approve</button>
+                  <button class="btn-light btn-sm" (click)="showDeletePopup(item._id)">Delete</button>
+                </div>
+              </td>
+            </ng-container>
+
+            <tr mat-row *matRowDef="let row; columns: colsToShow;"></tr>
+          </table>
+        </div>
+
+        <!--Story table-->
+        <div *ngIf="tabSelected == 2" class="table-container">
+          <h3 *ngIf="currentList.length == 0">There are no story posts to approve at this time.</h3>
+          <table mat-table #approvalTable [dataSource]="currentList">
+            <ng-container matColumnDef="img">
+              <td mat-cell class="image-cell" *matCellDef="let story">
+                <img class="img-thumbnail" [src]="story.storyPicModel" [alt]="story.storyTitle">
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="preview">
+              <td mat-cell class="description-cell" *matCellDef="let story">
+                <div class="text-container">
+                  <h4>{{story.storyTitle}}</h4>
+                  <p>{{story.storycontentModel}}</p>
+                </div>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="author">
+              <td mat-cell class="author-cell" *matCellDef="let story">
+                <a *ngIf="story.storyPublisher.firstName === story.storyPublisher.lastName; else regularUser">{{story.storyPublisher.firstName}}</a>
+                <ng-template #regularUser>
+                  <a>{{story.storyPublisher.firstName}} {{story.storyPublisher.lastName}}</a>
+                </ng-template>
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="buttons">
+              <td mat-cell class="button-cell" *matCellDef="let story">
+                <div class="button-container">
+                  <button class="btn-success btn-sm" (click) = "approveStory(story)">Approve</button>
+                  <button class="btn-light btn-sm" (click)="showDeletePopup(story._id)">Delete</button>
+                </div>
+              </td>
+            </ng-container>
+
+            <tr mat-row *matRowDef="let row; columns: colsToShow;"></tr>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div mdbModal #confirmDelete="mdbModal" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Are You Sure?</h5>
+          <button type="button" class="close" title="Close" (click)="hideDeletePopup()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>If you delete this post, it will not be saved or displayed on Stray Spirit. This action cannot be undone.</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="hideDeletePopup()">Cancel</button>
+          <button class="btn btn-primary" (click)="deleteItem()">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

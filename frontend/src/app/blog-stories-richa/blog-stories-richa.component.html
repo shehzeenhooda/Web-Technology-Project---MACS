@@ -1,0 +1,98 @@
+<!--Developer - Richa Khatri B00792218 Richa.khatri@dal.ca-->
+<div class="mt-85">
+  <div class="container mt-25">
+    <br>
+    <mat-tab-group>
+      <!-- Blogs Tab-->
+      <mat-tab label="Blogs">
+        <div class="row"></div>
+        <h3 style="color: #2196F3"><strong> About Pet Life </strong> </h3>
+        <h6>Here is some information about pets!!!</h6>
+        <div id="one" class="row">
+          <!--1st Card-->
+          <div class="col-lg-4 col-md-6" *ngFor="let blog of Blogs | paginate: { itemsPerPage: 6, currentPage: page }">
+            <!--Card-->
+            <mat-card class="view view-cascade overlay waves-light" mdbWavesEffect>
+              <!--Card image-->
+              <mdb-card-img style="height: 50%!important;"
+              [src]="blog.blogPicModel" [alt]="blog.blogTitle">
+            </mdb-card-img>
+              <mdb-card-body cascade="true" class="text-center">
+                  <h4 class="card-title">
+                    <strong>{{blog.blogTitle.substring(0,25)}}</strong>
+                  </h4>
+                  <mdb-card-text>
+                    {{blog.contentModel.substring(0,200)}}<br/><button mat-raised-button color="primary">View More</button>
+                  </mdb-card-text>
+                </mdb-card-body>
+            </mat-card>
+            <!--Card-->
+          </div>
+        </div>
+        <div class="clearfix" style="height: 20px;"></div>
+        <div class="pagination_wrapper">
+        <pagination-controls (pageChange)="page=$event"></pagination-controls>
+        </div>
+      </mat-tab>
+      <!--/Blogs-->
+
+      <!-- Stories Tab-->
+      <mat-tab label="Stories">
+        <div class="row"></div>
+        <!--Heading-->
+        <div class="row">
+          <div class="col-md-4">
+            <h3 style="color: #2196F3"><strong> Pet Stories </strong> </h3>
+          </div>
+        </div>
+        <!--/Heading-->
+
+        <!--Sub Heading-->
+        <div class="row">
+          <div class="col-md-4">
+            <h6>Adopters stories about pet!!!</h6>
+          </div>
+          <div class="col-md-4">
+          </div>
+          <div class="col-md-4">
+            <button mat-raised-button color="primary" class="pull-right" routerLink="/profile/addstory">Add Stories</button>
+          </div>
+        </div>
+        <!--/Sub Heading-->
+
+        
+        <div class="row" style="height: 10px;"></div>
+
+        <!--First Card of row-->
+        <div id="one" class="row">
+          <!--Card-->
+          <div class="col-lg-4 col-md-6" *ngFor="let story of Stories | paginate: { itemsPerPage: 6, currentPage: page }">
+            <mdb-card class="cards" narrower="true" >
+              <div class="view view-cascade overlay waves-light" mdbWavesEffect>
+                <mdb-card-img
+                [src]="story.storyPicModel" [alt]="story.storyTitle">
+                </mdb-card-img>
+                <a>
+                  <div class="mask rgba-white-slight"></div>
+                </a>
+              </div>
+              <mdb-card-body cascade="true" class="text-center">
+                <h4 class="card-title">
+                  <strong> {{story.storyTitle}}</strong>
+                </h4>
+                <mdb-card-text>
+                  {{story.storycontentModel.substring(0,200)}}<br/><button mat-raised-button color="primary">View More</button>
+                </mdb-card-text>
+              </mdb-card-body>
+            </mdb-card>
+          </div>
+          <!--/Card-->  
+        </div>
+        <div class="clearfix" style="height: 20px;"></div>
+        <div class="pagination_wrapper">
+        <pagination-controls (pageChange)="page=$event"></pagination-controls>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

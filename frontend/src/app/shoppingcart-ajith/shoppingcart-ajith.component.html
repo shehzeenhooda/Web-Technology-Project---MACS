@@ -1,0 +1,168 @@
+<!-- Developed by Ajith Jayanthi B00825322 aj788769@dal.ca -->
+<!DOCTYPE html>
+<div  class="mt-85">
+    <!-- stepper for shopping cart https://material.angular.io/components/stepper/overview -->
+    <mat-horizontal-stepper   [linear]="isLinear" #stepper>
+        <mat-step  [stepControl]="firstFormGroup">
+          
+            <ng-template matStepLabel>Shopping Cart</ng-template>
+            <div *ngIf=" cart_items.length == 0">
+              <!-- https://i.stack.imgur.com/3FDPa.png-->
+              <img  style="height:100%; width :100%" class="img-width-height" src="../assets/images/shoppingcartempty.png" alt="emptyshoppingcart"/>
+              <button   style="margin-left: 45%;width: 15%;" class="check-out-button" routerLink="/shop">Shop</button>
+            </div>
+            <div *ngIf=" cart_items.length != 0">
+            <h2 class="text-center" style="margin-top:25px">Cart</h2>
+            <div class="row mobile-header heading-border" style="margin-top:25px" >
+                <div class="col-md-2">Product</div>
+                <div class="col-md-4"></div>
+                <div class="col-md-1">Quantity</div>
+                <div class="col-md-1">Price</div>
+                <div class="col-md-1">SubTotal</div>
+                <div class="col-md-3">Action</div>
+              </div>
+              <div *ngFor="let product of cart_items">
+                <div style="margin-top:1%">
+              <mdb-card  style="margin-left: 17%;margin-right: 7%">
+                <div class="row" >
+                    <div class="col-md-2 col-sm-4">
+                        <img [src]="product.productpic" [alt]="product.productname" class="img-fluid">
+                    </div>
+                    <div class="col-md-4 col-sm-8" style="margin-top:4%">
+                      <label style="margin-left: 1%">{{product.productname}}</label>
+                      <div class="price_mobile_both">
+                          <label style="margin-left:5%"> {{product.productprice}}</label>
+                          <input [(ngModel)]="product.itemcount" style="margin-left:18%;width: 20%" min= "1" type="number" (click)="count_items_update(product.productpic,product.productname,product.itemcount)">
+                      </div>
+                    </div>
+                    <div class="col-md-1 price_quantity_lap" style="margin-left: 7%;margin-top: 4%;">
+                        <input  [(ngModel)]="product.itemcount" style="width: 100%" class="col-xs-3" min= "1" type="number" (click)="count_items_update(product.productpic,product.productname,product.itemcount)">
+                    </div>
+                    <div class="col-md-1 price_quantity_lap" style="margin-top:4%">
+                        <label >
+                            {{product.productprice}}
+                        </label>
+                    </div>
+                    <div class="col-md-1 col-sm-6 price_quantity_lap" style="margin-top:4%">
+                        <p >
+                            {{product.productprice * product.itemcount}}
+                          </p>
+                    </div>
+                    <div class="col-md-2 col-sm-6 " style="margin-top:4%">
+                        <div class="remove_product_desktop" (click)="removeproduct(product.productpic,product.productname)" >
+                          <i class="fas fa-trash-alt" ></i> <span> Remove</span>
+                        </div>
+                        <div class="remove_product_mobile" (click)="removeproduct(product.productpic,product.productname)" >
+                            <i class="fas fa-trash-alt" ></i> <span> Remove</span>
+                          </div>
+                      </div>
+                </div>
+              </mdb-card>
+            </div>
+            </div>
+                <div class="row">
+                  <div class="col-sm-8"></div>
+                  <div class="col-sm-4 desktop-total" style="margin-left:-5%;margin-top:3%">
+                    <div class="row">
+                    <label class="col-sm">Grand Total</label>
+                    <label class="col-sm">$ {{grand_total}}</label>
+                    <button  mat-button matStepperNext class="col-sm check-out-button" >Checkout</button>
+                  </div> 
+                  </div>
+                  <div class="col-sm-4 tab-total" style="margin-left:-5%;margin-top:3%">
+                    <div class="row">
+                    <label class="col-sm">Grand Total</label>
+                    <label class="col-sm">$ {{grand_total}}</label>
+                    </div>
+                    <button  mat-button matStepperNext class="col-sm check-out-button">Checkout</button>
+                   
+                  </div>
+                  <div class="col-sm-4 mobile-total" style="margin-left:17%;margin-top:3%">
+                      <label class="col-sm-2">Grand Total:  $ {{grand_total}}</label>
+                      <button  mat-button matStepperNext class="check-out-button" style="width: 80%">Checkout</button>
+                    
+                    </div>
+                </div>
+          </div>
+        </mat-step>
+        <mat-step  [stepControl]="secondFormGroup">
+            <ng-template matStepLabel>Delivery Address</ng-template>
+            <mdb-card  style="width: 50%;margin-left:25%">
+            <form style="padding: 6%" name="adressForm" [formGroup]="adressForm" (submit)="onAddressSubmit()">
+                <div class="md-form">
+                    <input mdbInputDirective type="text" id="firstName" class="form-control" name="firstName" formControlName="firstName" [ngClass]="{'is-invalid':adressForm.get('firstName').touched && adressForm.get('firstName').invalid}">
+                    <label for="firstName" class="">Firstname *</label>
+                    <div *ngIf="adressForm.get('firstName').touched && adressForm.get('firstName').invalid"class="invalid-feedback">
+                        <div *ngIf="adressForm.get('firstName').errors.required">First Name is required</div>
+                        <div *ngIf="adressForm.get('firstName').errors.pattern">Invalid Value (No spaces or special characters allowed!)</div>
+                    </div>
+                </div>
+                <div class="md-form">
+                    <input mdbInputDirective type="text" id="lastname" class="form-control" name="lastname"
+                        formControlName="lastName" [ngClass]="{'is-invalid':adressForm.get('lastName').touched && adressForm.get('lastName').invalid}">
+                    <label for="lastname" class="">Lastname *</label>
+                    <div *ngIf="adressForm.get('lastName').touched && adressForm.get('lastName').invalid"
+                class="invalid-feedback">
+                <div *ngIf="adressForm.get('lastName').errors.required">Last Name is required</div>
+                <div *ngIf="adressForm.get('lastName').errors.pattern">Invalid Value (No spaces or special characters allowed!)</div>
+            </div>
+                </div>
+                <div class="md-form">
+                    <input mdbInputDirective type="email" id="email" class="form-control" name="email"
+                        formControlName="email" [ngClass]="{'is-invalid':adressForm.get('email').touched && adressForm.get('email').invalid}">
+                    <label for="email" class="">E-mail *</label>
+                    <div *ngIf="adressForm.get('email').touched && adressForm.get('email').invalid"
+                        class="invalid-feedback">
+                        <div *ngIf="adressForm.get('email').errors.required">Email is required</div>
+                        <div *ngIf="adressForm.get('email').errors.email || adressForm.get('email').errors.pattern">Email should be valid</div>
+                    </div>
+                </div>
+                <div class="md-form">
+                    <input mdbInputDirective type="text" id="addressline1" class="form-control" name="addressline1" formControlName="addressline1" [ngClass]="{'is-invalid':adressForm.get('addressline1').touched && adressForm.get('addressline1').invalid}">
+                    <label for="addressline1" class="">Address Line1 *</label>
+                    <div *ngIf="adressForm.get('addressline1').touched && adressForm.get('addressline1').invalid"
+                        class="invalid-feedback">
+                        <div *ngIf="adressForm.get('addressline1').errors.required">Address Line1 is required</div>
+                    </div>
+                </div>
+                <div class="md-form">
+                    <input mdbInputDirective type="text" id="addressline2" class="form-control" name="addressline2" formControlName="addressline2" [ngClass]="{'is-invalid':adressForm.get('addressline2').touched && adressForm.get('addressline2').invalid}">
+                    <label for="addressline2" class="">Address Line2 *</label>
+                    <div *ngIf="adressForm.get('addressline2').touched && adressForm.get('addressline2').invalid"
+                        class="invalid-feedback">
+                        <div *ngIf="adressForm.get('addressline2').errors.required">Address Line2 is required</div>
+                    </div>
+                </div>
+                <div class="md-form">
+                    <input mdbInputDirective type="text" id="pincode" class="form-control" name="pincode" formControlName="pincode" [ngClass]="{'is-invalid':adressForm.get('pincode').touched && adressForm.get('pincode').invalid}">
+                    <label for="phone" class="">Pincode *</label>
+                    <div *ngIf="adressForm.get('pincode').touched && adressForm.get('pincode').invalid"
+                        class="invalid-feedback">
+                        <div *ngIf="adressForm.get('pincode').errors.required">Pincode is required</div>
+                        <div *ngIf="adressForm.get('pincode').errors.pattern">Please enter a valid pincode (starting with [1-9] digits and length of 6 digits)</div>
+                    </div>
+                </div>
+                <div class="md-form">
+                    <input mdbInputDirective type="text" id="phone" class="form-control" name="phone" formControlName="number" [ngClass]="{'is-invalid':adressForm.get('number').touched && adressForm.get('number').invalid}">
+                    <label for="phone" class="">Phone Number *</label>
+                    <div *ngIf="adressForm.get('number').touched && adressForm.get('number').invalid"
+                        class="invalid-feedback">
+                        <div *ngIf="adressForm.get('number').errors.required">Phone Number is required</div>
+                        <div *ngIf="adressForm.get('number').errors.pattern">Phone Number should be valid (XXXXXXXXXX,XXX-XXX-XXXX,(XXX)-(XXX)-(XXXX))</div>
+                    </div>
+                </div>
+                  <div class="row submit-address" >
+                      <button class="col-sm" mdbBtn matStepperNext type="submit" color="indigo" mdbWavesEffect class="adressForm_button" [disabled]="!adressForm.valid" >Submit</button>
+                      <button class="col-sm" mdbBtn matStepperPrevious  color="indigo" mdbWavesEffect class="back_button"  >Cancel</button>
+                  </div>
+            </form>
+              
+              
+            </mdb-card>
+        </mat-step>
+        <mat-step  >
+          <ng-template matStepLabel>Confirmation</ng-template>
+          <img  style="height:100%; width :62%;margin-left:20%" class="img-width-height" src="../assets/images/orderconfirmation.png" alt="emptyshoppingcart"/>
+        </mat-step>
+      </mat-horizontal-stepper>
+</div>

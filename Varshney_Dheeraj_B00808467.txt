@@ -1,0 +1,43 @@
+Author: Dheeraj Varshney
+Email dh301823@dal.ca
+BID B00808467
+
+
+Kindly follow the instruction guide for installation steps for backend and one common read me file. Common_Readme. For frontend we provided the installation steps in Assignment2 and it is available on git
+
+
+Features: -
+1. Inventory Management (Adding products, Deleting Products)
+2. Edit Inventory
+
+Strayspirit
+We are working on Strayspirit application which is basically a pet rescue website. This website will help in adopt stray pets and also user will be able to add products, pets and events. The website will also show events to which users can register. Users can also adopt the pets whichever they want to adopt. 
+For this assignment I have worked on Inventory management feature, which includes adding a product by an individual. The products which are being added by the individual will then be displayed on Shop page. 
+I worked on backend in which  i created models and routes which will be repsonsible for storing the schema and the routes.  
+Here I have taken care of the fact that if a product has any product then it will not be displayed in another user’s My Inventory although other user will be able to view it on Shop page.
+For adding the products user will follow the steps: -
+User will login with valid credentials
+User will navigate to My Profile by clicking on My Profile option which is available under user’s icon dropdown.
+User will click on My Inventory page
+User will be able to view two sections one is My Inventory and Add Product  
+When user will click on Add Product user will be able to add the details like product name, description, Price, Quantity and user can also upload the image of the product. Once user adds the product, it will be displayed under My inventory and on Shop page.
+Currently I have not implemented Edit functionality and working on it. For Assignment 4 when user will click on Edit button a toast message will be displayed which will have a message that “Just a message for Assignment4 UI. Coming Soon”
+On Shop page user will be able to view all the products which have been added by different users and on clicking Cart icon and Share icon for now nothing will happen as it is different feature and some other group member is working on it. For now, it will just show the message that “Just a message for Assignment4 UI. Coming Soon”.
+On Shop page when user will click on the product, user will be navigated to product detail page which will have the details of the product. There also user will have option of Add to Cart and Learn More. When user will click on Add to Cart and Learn More, for Assignment 4 it will show a toast message that “Just a message for Assignment4 UI. Coming Soon”
+When user wil click on Delete in My Inventory the particular product will be deleted.
+
+
+Note : I wil be implementing Edit inventory as my other feature
+Path
+My Inventory:- http://localhost:4200/profile/inventory
+
+References
+https://www.w3schools.com/css/css_rwd_mediaqueries.asp
+https://stackoverflow.com/questions/48216410/angular-4-base64-upload-component
+https://www.udemy.com/angular-2-and-nodejs-the-practical-guide/
+https://www.npmjs.com/package/ngx-toastr
+https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/mongoose
+https://www.amazon.ca/Adjustable-Products-Whisperer-Training-Collar/dp/B01LZ98RW9/ref=sr_1_5?keywords=pet+products&qid=1553381126&s=gateway&sr=8-5
+https://www.amazon.ca/Grizzly-Pet-Products-Krill-Oil/dp/B00VEZHK0I/ref=sr_1_88?keywords=pet+products&qid=1553382553&s=gateway&sr=8-88
+https://www.amazon.ca/Pet-Removable-Washable-Majestic-Products/dp/B00OJQB0IM/ref=sr_1_72?keywords=pet+products&qid=1553382553&s=gateway&sr=8-72
+https://www.amazon.ca/Carlson-Pet-Products-Compact-Secure/dp/B00MYDZIBM/ref=sr_1_54?keywords=pet+products&qid=1553382553&s=gateway&sr=8-54

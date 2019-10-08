@@ -1,0 +1,84 @@
+//  Developed by Sravan Sajeev B00825856  
+//  Modified by  Ajith Jayanthi B00825322 aj788769@dal.ca  
+table {
+    width: 100%;
+  }
+  
+.wrapper {
+    
+    float: left;
+}
+.right {
+    margin-left:auto;
+    margin-bottom:auto;
+    float: left;
+    padding-right: 1%;
+}
+.right1 {
+    margin-left:600px;
+    
+}
+.he{
+    max-width: 100%;
+    margin-bottom: 2%;
+
+}
+
+.button-class
+{   margin-left: 54%;
+   
+}
+
+.sub 
+{
+    padding-left: 10%;
+    padding-top: 0%;
+}
+.mat-h2
+{
+    margin-bottom: 0px;
+}
+
+.rep
+{
+    text-align: end;
+    float:right;
+    font-weight: bold;
+}
+
+#fposts
+{
+    border: 15px solid yellow;
+}
+
+#heading
+{
+    text-align: center;
+}
+.post_button{
+    margin-left: 90%;
+}
+
+.space-left{
+    margin-left: 36%
+}
+@media screen and (max-width:440px){
+    .post_button{
+        margin-left: 50%;
+    }
+}
+.back-button{
+    margin-left: 95%;
+    margin-bottom:2%
+}
+@media screen and (max-width:490px){
+    .back-button{
+        margin-left: 65%;
+        margin-bottom:2%
+    }
+}
+@media screen and (max-width:899px){
+    .space-left{
+        margin-left: 8%;
+    }
+}

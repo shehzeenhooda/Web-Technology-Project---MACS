@@ -1,0 +1,124 @@
+<!-- Developed by Sravan Sajeev B00825856  -->
+<!-- Modified by  Ajith Jayanthi B00825322 aj788769@dal.ca  -->
+<!DOCTYPE html> 
+<title></title>
+<head>
+</head>
+<body>
+    
+
+<div  style=" margin-top : 150px;">
+    
+
+
+    <div  *ngIf="!show_discussion_forum" class="mt-25 container " >
+                <button *ngIf="!isPostQuestion && isuserloggedin" class="button-class"  mat-flat-button color="accent" (click)="askAQuestion()" >Ask a question</button>
+                <button *ngIf="isPostQuestion" class="button-class"  mat-flat-button color="accent" (click)="askAQuestion()" >Cancel</button>
+        <div class="row">
+        
+            <div class ="col-md-8">
+                        <mat-card style="width:70%;margin-left:22%;padding:3%" *ngIf="isPostQuestion">
+                                        <h2 style="text-align: center"> Posting A Query</h2>
+                                        <form  name="discussionForum" [formGroup]="discussionForum" (submit)="onPost()">
+                                                <div class="md-form">
+                                                        <input  mdbInputDirective type="text" id="title" class="form-control" name="title" formControlName="title" [ngClass]="{'is-invalid':discussionForum.get('title').touched && discussionForum.get('title').invalid}">
+                                                        <label for="title" class="">Enter Title *</label>
+                                                        <div *ngIf="discussionForum.get('title').touched && discussionForum.get('title').invalid"class="invalid-feedback">
+                                                              <div *ngIf="discussionForum.get('title').errors.required">Title is required</div>
+                                                        </div>
+                                                </div>
+                                                 <div class="md-form">
+                                                        <textarea  mdbInputDirective type="text" id="question" class="form-control" name="question" formControlName="question" [ngClass]="{'is-invalid':discussionForum.get('question').touched && discussionForum.get('question').invalid}"></textarea>
+                                                        <label for="question" class="">Enter the question *</label>
+                                                        <div *ngIf="discussionForum.get('question').touched && discussionForum.get('question').invalid"class="invalid-feedback">
+                                                                <div *ngIf="discussionForum.get('question').errors.required">Question is required</div>
+                                                        </div>
+                                                </div>
+                                                <div class="md-form">
+                                                        <!-- <input name="imageUrl" type="file" accept="image/*" (change)="handleInputChange($event)" /> -->
+                                                        <input  mdbInputDirective accept="image/*" type="file" id="image" (change)="handleInputChange($event)" class="form-control" name="image" formControlName="image" [ngClass]="{'is-invalid':discussionForum.get('image').touched && discussionForum.get('image').invalid}">
+                                                        <label for="image" class=""></label>
+                                                        <div *ngIf="discussionForum.get('image').touched && discussionForum.get('image').invalid"class="invalid-feedback">
+                                                                <div *ngIf="discussionForum.get('image').errors.required">Image is required</div>
+                                                        </div>
+                                                </div>
+                                                
+                                                <div class="row " >
+                                                    <button class="col-sm" type="submit" mdbBtn   color="indigo" [disabled]="!discussionForum.valid" mdbWavesEffect>Post</button>
+                                                    <button class="col-sm" mdbBtn   color="indigo" (click)="askAQuestion()" mdbWavesEffect>Cancel</button>
+                                                </div>
+                                        </form>
+                                        </mat-card>
+        <div *ngFor="let forum of discussion_data">
+                <mat-card class="he">
+                    <mat-card-header >
+                        <!-- Image taken from example shown in material.angular.io -->
+                        <img mat-card-avatar [src]="forum.image" alt="dog">
+                        <h2 (click)="open_discussion(forum._id)" class="mat-h2"><a>{{ forum.title }}</a></h2>
+                        
+                        <div class="right"><h4 class="mat-h3" style="margin-bottom:auto;">{{ forum.discussions.length }}</h4></div>
+                    </mat-card-header>
+                    <mat-card-subtitle>
+                            <div class="sub">
+                            Posted by {{forum.firstName+" "+forum.lastName}} at {{ forum.time }}
+                            <div class= "rep">Replies</div>
+                            </div>
+                    </mat-card-subtitle>
+                </mat-card>
+        </div>                                        
+            </div>
+                
+                    <div class= "col-md-4" >
+                            <h2 class="mat-h2" id="heading" ><a>Featured posts</a></h2>
+                        <div id="fposts">
+                            <mat-list *ngFor="let data of featured_discussion" role="list">
+                                    <mat-list-item role="listitem" (click)="open_discussion(data.id)" ><a>{{data.title}}</a></mat-list-item>
+                            </mat-list>
+
+                        </div>
+                    </div>   
+           
+        </div>
+    </div>
+    <div *ngIf="show_discussion_forum" style="padding: 10%">
+                <button  class="back-button"  mat-flat-button color="accent" (click)="showhomediscussion();featuredpost()" >Back</button>
+                <mat-card class="he">
+                        <h2 style="text-align: center">{{selected_discussion.title}}</h2>
+                        <p>{{selected_discussion.description}}</p>
+                        <img style="width: 50%;height: 50%;margin-left: 22%;" [src]="selected_discussion.image" alt="dog">
+                </mat-card>
+                <div *ngIf="isuserloggedin">
+                <form  name="replyForum" [formGroup]="replyForum" (submit)="post_reply(selected_discussion._id)">
+                        <div class="md-form">
+                                <textarea  mdbInputDirective type="text" id="reply" class="form-control" name="reply" formControlName="reply" [ngClass]="{'is-invalid':replyForum.get('reply').touched && replyForum.get('reply').invalid}"></textarea>
+                                <label  for="reply" class="">Enter the reply *</label>
+                                        <div *ngIf="replyForum.get('reply').touched && replyForum.get('reply').invalid"class="invalid-feedback">
+                                               <div *ngIf="replyForum.get('reply').errors.required">Reply is required</div>
+                                        </div>
+                        </div>
+                        <div class="row" >
+                                        <button class="post_button" mdbBtn  [disabled]="!replyForum.valid" mdbWavesEffect color="indigo"  mdbWavesEffect>Post</button>           
+                        </div>
+                </form>                        
+                <!-- <textarea placeholder="Enter the reply" [(ngModel)]="discussion_new" style="width: 100%;height:100px" ></textarea>
+                <div class="row" >
+                                <button class="post_button" mdbBtn  (click)="post_reply(selected_discussion._id)" color="indigo"  mdbWavesEffect>Post</button>           
+                </div> -->
+                </div>
+                <h1>Answers</h1>
+                <mat-card style="margin-top: 2%"   *ngFor="let data of selected_discussion.discussions;let replynumber = index">
+                        <div class="row">
+                                <h3 class="col-sm-9">{{data.firstName +" "+data.lastName+" at "+data.time}}</h3>
+                                <div class="col-sm-3">
+                                        <a (click)="update_votes_count('upvote',selected_discussion._id,replynumber)" ><i class="fas fa-thumbs-up"></i></a>
+                                        <label style="margin-left: 15%">{{data.upvotes}}</label>
+                                        <a (click)="update_votes_count('downvote',selected_discussion._id,replynumber)"><i  class="fas fa-thumbs-down space-left"></i></a>
+                                        <label style="margin-left: 15%">{{data.downvotes}}</label>
+                                </div>
+                        </div>
+                        
+                        <p>{{data.reply}}</p>
+                </mat-card>
+    </div>
+</div>
+</body>

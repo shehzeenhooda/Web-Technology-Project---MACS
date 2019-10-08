@@ -1,0 +1,43 @@
+
+
+  <div class="pet-lists">
+    <div class="container">
+      <div *ngIf="pets">
+        <div class="row">
+          <div class="col-lg-3 col-sm-4"
+            *ngFor="let pet of pets">
+            <div class="pets_list">
+              <a routerLink="/pet-profile/{{pet._id}}">
+                <mdb-card>
+                  <div class="pets_card">
+                    <!--Card image-->
+                    <div class="card_img_wrapper">
+                      <img [src]="pet.petPic" alt="{{pet.petName}}" class="img-fluid">
+                    </div>
+                    <!--Card content-->
+                    <mdb-card-body>
+                      <!--Title-->
+                      <mdb-card-title>
+                        <h4>
+                          <span>{{pet.petName}}</span>
+                        </h4>
+                      </mdb-card-title>
+                    </mdb-card-body>
+                    <div class="pet_card_overlay">
+                      <div class="pet_card_overlay_image">
+                        <img [src]="pet.petPic" alt="{{pet.petName}}" class="img-fluid">
+                      </div>
+                      <div class="pet_card_overlay_detail">
+                        <h4>{{pet.petName}}</h4>
+                        <p>{{pet.petAge}} | {{pet.petGender}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </mdb-card>
+              </a>
+            </div>
+          </div>
+        </div>
+
+
+  
